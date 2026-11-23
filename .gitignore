@@ -1,0 +1,23 @@
+# Secrets and identities — never commit
+.env
+certs/
+*.pem
+*.key
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+.pytest_cache/
+.ruff_cache/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Device runtime state (cached DPS assignments)
+state/

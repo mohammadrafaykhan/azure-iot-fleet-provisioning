@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 820" font-family="Segoe UI, system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="mTeal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#038387"/></marker>
+    <marker id="mBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#0078D4"/></marker>
+    <marker id="mPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8764B8"/></marker>
+    <marker id="mOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#CA5010"/></marker>
+    <marker id="mGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#B58900"/></marker>
+    <style>
+      .zl{font-size:13px;font-weight:700;letter-spacing:.5px;fill:#323130}
+      .zs{font-size:11.5px;fill:#605E5C}
+      .h{font-size:14px;font-weight:700;fill:#201F1E}
+      .hs{font-size:12.5px;font-weight:700;fill:#201F1E}
+      .s{font-size:11.5px;fill:#605E5C}
+      .f{font-size:11px;font-style:italic}
+      .n{font-size:12px;font-weight:700;fill:#fff}
+      .lg{font-size:12.5px;fill:#323130}
+      .teal{stroke:#038387;stroke-width:1.8;fill:none}
+      .blue{stroke:#0078D4;stroke-width:1.8;fill:none}
+      .purple{stroke:#8764B8;stroke-width:1.8;fill:none}
+      .orange{stroke:#CA5010;stroke-width:1.9;fill:none}
+      .gold{stroke:#B58900;stroke-width:1.6;fill:none;stroke-dasharray:6 4}
+    </style>
+  </defs>
+
+  <rect width="1240" height="820" fill="#ffffff"/>
+  <text x="40" y="38" font-size="26" font-weight="700" fill="#201F1E">Zero-touch fleet provisioning &#8212; architecture</text>
+  <text x="40" y="62" font-size="14" fill="#605E5C">Devices ship with only a certificate chain and the DPS ID scope. DPS decides which hub they join; the operator manages the fleet with Entra ID.</text>
+
+  <!-- zones -->
+  <rect x="30" y="95" width="300" height="205" rx="12" fill="#FFFBEA" stroke="#B58900" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <text x="48" y="119" class="zl">PKI</text>
+  <text x="84" y="119" class="zs">offline &#183; python -m pki</text>
+  <rect x="30" y="320" width="300" height="335" rx="12" fill="#E9F6F6" stroke="#038387" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <text x="48" y="344" class="zl">DEVICES</text>
+  <rect x="380" y="95" width="480" height="560" rx="12" fill="#FAF9F8" stroke="#605E5C" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <text x="398" y="119" class="zl">AZURE</text>
+  <text x="458" y="119" class="zs">rg-iot-fleet-dev &#183; deployed with Bicep</text>
+  <rect x="910" y="95" width="300" height="560" rx="12" fill="#EFF6FC" stroke="#2B88D8" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <text x="928" y="119" class="zl">OPERATOR</text>
+
+  <!-- PKI chain -->
+  <rect x="50" y="135" width="260" height="40" rx="6" fill="#fff" stroke="#B58900" stroke-width="1.4"/>
+  <text x="62" y="152" class="hs">Fleet Root CA</text>
+  <text x="62" y="167" class="s">ECDSA P-256 &#183; path length 1 &#183; key offline</text>
+  <line x1="180" y1="175" x2="180" y2="189" stroke="#B58900" stroke-width="1.4" marker-end="url(#mGold)"/>
+  <rect x="50" y="190" width="260" height="40" rx="6" fill="#fff" stroke="#B58900" stroke-width="1.4"/>
+  <text x="62" y="207" class="hs">Devices CA (intermediate)</text>
+  <text x="62" y="222" class="s">path length 0 &#183; named by the enrollment group</text>
+  <line x1="180" y1="230" x2="180" y2="244" stroke="#B58900" stroke-width="1.4" marker-end="url(#mGold)"/>
+  <rect x="50" y="245" width="260" height="40" rx="6" fill="#fff" stroke="#B58900" stroke-width="1.4"/>
+  <text x="62" y="262" class="hs">press-01 &#8230; press-05</text>
+  <text x="62" y="277" class="s">clientAuth &#183; CN = device ID &#183; 1-year validity</text>
+
+  <!-- devices -->
+  <rect x="55" y="365" width="250" height="270" rx="8" fill="#fff" stroke="#038387" stroke-width="1.6"/>
+  <rect x="55" y="365" width="250" height="6" rx="3" fill="#038387"/>
+  <text x="70" y="393" class="h">Fleet simulator</text>
+  <rect x="236" y="378" width="56" height="22" rx="4" fill="#FFF4CE" stroke="#D9A300"/>
+  <text x="264" y="393" text-anchor="middle" class="s" font-weight="700">X.509</text>
+  <text x="70" y="422" class="hs">boot</text>
+  <text x="70" y="439" class="s">cached assignment &#8594; connect to that hub</text>
+  <text x="70" y="455" class="s">none, or hub rejects &#8594; register with DPS</text>
+  <text x="70" y="484" class="hs">identity</text>
+  <text x="70" y="501" class="s">presents leaf &#8594; intermediate &#8594; root</text>
+  <text x="70" y="530" class="hs">resilience</text>
+  <text x="70" y="547" class="s">backoff + jitter (&#8805; 5 s) &#183; staggered start</text>
+  <text x="70" y="563" class="s">disabled enrollment &#8594; stop (revoked)</text>
+  <text x="70" y="592" class="hs">reports</text>
+  <text x="70" y="609" class="s">assigned hub &#183; cert thumbprint &#183; expiry</text>
+
+  <!-- DPS -->
+  <rect x="405" y="140" width="430" height="230" rx="8" fill="#fff" stroke="#8764B8" stroke-width="1.8"/>
+  <rect x="405" y="140" width="6" height="230" rx="3" fill="#8764B8"/>
+  <text x="620" y="168" text-anchor="middle" class="h">Device Provisioning Service (S1)</text>
+  <text x="425" y="200" class="hs">Verified CA</text><text x="575" y="200" class="s">fleet-root-ca</text>
+  <text x="425" y="237" class="hs">Enrollment group</text><text x="575" y="237" class="s">presses &#183; signing cert = Devices CA</text>
+  <text x="575" y="253" class="s">initial twin: tags + telemetryIntervalMs</text>
+  <text x="425" y="290" class="hs">Individual enrollment</text><text x="575" y="290" class="s">press-03 &#183; disabled = revoked</text>
+  <text x="425" y="327" class="hs">Policies</text><text x="575" y="327" class="s">hashed allocation &#183; reprovision + migrate</text>
+  <text x="425" y="352" class="hs">Local auth</text><text x="575" y="352" class="s">disabled &#183; Entra ID only</text>
+
+  <!-- DPS to hub -->
+  <line x1="560" y1="370" x2="560" y2="434" class="purple" marker-end="url(#mPurple)"/>
+  <text x="572" y="392" class="s" fill="#8764B8" font-weight="700">registers device + initial twin</text>
+  <text x="572" y="408" class="s">managed identity &#183; IoT Hub Data Contributor</text>
+  <text x="572" y="423" class="s">(no connection string)</text>
+
+  <!-- IoT Hub -->
+  <rect x="405" y="435" width="430" height="195" rx="8" fill="#fff" stroke="#323130" stroke-width="1.8"/>
+  <rect x="405" y="435" width="6" height="195" rx="3" fill="#323130"/>
+  <text x="620" y="463" text-anchor="middle" class="h">Azure IoT Hub (F1)</text>
+  <text x="425" y="495" class="hs">Identity registry</text><text x="575" y="495" class="s">leaf thumbprint pinned by DPS &#183; SAS off</text>
+  <text x="425" y="532" class="hs">Trusted CA</text><text x="575" y="532" class="s">fleet-root-ca</text>
+  <text x="425" y="569" class="hs">Device twin</text><text x="575" y="569" class="s">tags.enrollmentGroup &#183; Plug and Play acks</text>
+  <text x="425" y="606" class="hs">Telemetry</text><text x="575" y="606" class="s">D2C over MQTT/TLS 8883</text>
+
+  <!-- PKI to Azure (deploy time) -->
+  <path d="M310 155 C 350 155, 360 200, 403 200" class="gold" marker-end="url(#mGold)"/>
+  <path d="M310 160 C 355 170, 350 520, 403 530" class="gold" marker-end="url(#mGold)"/>
+  <text x="336" y="140" class="s" fill="#B58900" font-weight="700">root CA</text>
+
+  <!-- device to DPS -->
+  <path d="M305 420 C 350 420, 360 238, 403 238" class="orange" marker-end="url(#mOrange)"/>
+  <circle cx="346" cy="300" r="11" fill="#CA5010"/><text x="346" y="304" text-anchor="middle" class="n">1</text>
+  <path d="M403 300 C 375 300, 360 445, 307 445" class="orange" stroke-dasharray="6 4" marker-end="url(#mOrange)"/>
+  <circle cx="372" cy="372" r="11" fill="#CA5010"/><text x="372" y="376" text-anchor="middle" class="n">2</text>
+
+  <!-- device to hub -->
+  <line x1="305" y1="540" x2="403" y2="540" class="teal" marker-end="url(#mTeal)"/>
+  <circle cx="354" cy="540" r="11" fill="#038387"/><text x="354" y="544" text-anchor="middle" class="n">3</text>
+
+  <!-- operator -->
+  <rect x="935" y="140" width="250" height="230" rx="8" fill="#fff" stroke="#0078D4" stroke-width="1.6"/>
+  <rect x="935" y="140" width="250" height="6" rx="3" fill="#0078D4"/>
+  <text x="950" y="168" class="h">fleetctl</text>
+  <rect x="1088" y="153" width="84" height="22" rx="4" fill="#EFF6FC" stroke="#0078D4"/>
+  <text x="1130" y="168" text-anchor="middle" class="s" font-weight="700">Entra ID</text>
+  <text x="950" y="200" class="hs">group</text><text x="1010" y="200" class="s">create &#183; list &#183; disable</text>
+  <text x="950" y="237" class="hs">registrations</text><text x="1050" y="237" class="s">per group</text>
+  <text x="950" y="274" class="hs">devices</text><text x="1010" y="274" class="s">hub query by group</text>
+  <text x="950" y="311" class="hs">revoke</text><text x="1010" y="311" class="s">DPS + hub in one step</text>
+  <text x="950" y="348" class="hs">reinstate</text><text x="1025" y="348" class="s">undo a revocation</text>
+
+  <rect x="935" y="435" width="250" height="150" rx="8" fill="#fff" stroke="#605E5C" stroke-width="1.4"/>
+  <text x="950" y="463" class="h">Bicep + deploy.ps1</text>
+  <text x="950" y="491" class="s">IoT Hub &#183; DPS &#183; managed-identity link</text>
+  <text x="950" y="509" class="s">root CA on DPS and hub</text>
+  <text x="950" y="527" class="s">RBAC: DPS Data Contributor,</text>
+  <text x="950" y="545" class="s">IoT Hub Data Contributor</text>
+  <text x="950" y="571" class="s">teardown.ps1 removes everything</text>
+
+  <line x1="933" y1="210" x2="837" y2="210" class="blue" marker-end="url(#mBlue)"/>
+  <text x="885" y="200" text-anchor="middle" class="s" fill="#0078D4" font-weight="700">REST</text>
+  <path d="M933 300 C 885 300, 885 500, 837 500" class="blue" marker-end="url(#mBlue)"/>
+  <text x="868" y="420" class="s" fill="#0078D4" font-weight="700">REST</text>
+
+  <!-- legend -->
+  <rect x="30" y="680" width="1180" height="115" rx="10" fill="#FAF9F8" stroke="#E1DFDD"/>
+  <circle cx="58" cy="708" r="10" fill="#CA5010"/><text x="58" y="712" text-anchor="middle" class="n">1</text>
+  <text x="76" y="712" class="lg">Device registers with DPS over TLS, presenting its chain; DPS matches it to the enrollment group by the Devices CA.</text>
+  <circle cx="58" cy="736" r="10" fill="#CA5010"/><text x="58" y="740" text-anchor="middle" class="n">2</text>
+  <text x="76" y="740" class="lg">DPS creates the device in the hub with the group's initial twin and returns the assigned hub; the device caches it.</text>
+  <circle cx="58" cy="764" r="10" fill="#038387"/><text x="58" y="768" text-anchor="middle" class="n">3</text>
+  <text x="76" y="768" class="lg">Device connects to that hub with the same certificate: twin acknowledgement, provisioning report, telemetry.</text>
+  <text x="76" y="788" class="lg" fill="#605E5C">Revocation: a disabled individual enrollment outranks the group, and the hub device is disabled. Rotation: new key, same CN; the device re-provisions itself when the hub rejects it.</text>
+</svg>
