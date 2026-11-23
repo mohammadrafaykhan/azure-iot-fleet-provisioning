@@ -34,5 +34,4 @@ fleet rebooting after a power cut would hit DPS at once.
 
 - A normal boot costs no DPS operation, and reconnect storms are spread out.
 - A stale cache costs one failed connect before recovery.
-- Device state on disk is not secret (hub name, device ID), but a production device would keep
-  it in protected storage alongside its key.
+- Device state on disk is not secret (hub name, device ID).

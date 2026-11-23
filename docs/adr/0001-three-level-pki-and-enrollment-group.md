@@ -28,6 +28,3 @@ certificate chain contains a trusted CA provision itself.
 - Adding a device is issuing a certificate; nothing changes in Azure.
 - The root key is needed only to issue intermediates and should stay offline. Losing the
   intermediate key requires disabling the group and re-issuing the fleet under a new intermediate.
-- **Production path:** root in an offline HSM, intermediate in a cloud HSM or managed PKI,
-  device keys generated inside a TPM or secure element so they never exist as files, and
-  proof-of-possession verification when the CA owner and the Azure owner differ.

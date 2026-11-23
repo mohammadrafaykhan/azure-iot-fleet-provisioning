@@ -35,6 +35,3 @@ the services provide.
   the hub's rejection rather than done on every boot.
 - The hub device stays disabled and DPS matches individual enrollments by registration ID, so
   a re-issued certificate for a revoked device does not bring it back; reinstating is explicit.
-- **Production path:** short-lived device certificates issued on the device by a managed PKI
-  (for example Azure Device Registry certificate management), so expiry does most of the work
-  that CRLs would.
